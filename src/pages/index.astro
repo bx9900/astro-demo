@@ -1,0 +1,12 @@
+---
+export const prerender = true;
+
+import Layout from "../layouts/Layout.astro";
+---
+<Layout title="Home">
+  <h1>Home</h1>
+  <p>Hybrid Astro app — this page is pre-rendered.</p>
+  <a href="/about/">About</a>
+  <br />
+  <a href="/ssr/"><button>Go to SSR Page</button></a>
+</Layout>
