@@ -1,12 +1,44 @@
 ---
-export const prerender = true;
-
 import Layout from "../layouts/Layout.astro";
 ---
 <Layout title="Home">
   <h1>Home</h1>
-  <p>Hybrid Astro app — this page is pre-rendered.</p>
+  <p>Hybrid Astro app with middleware.</p>
   <a href="/about/">About</a>
   <br />
-  <a href="/ssr/"><button>Go to SSR Page</button></a>
+  <a href="/ssr/">SSR Page</a>
+  <br />
+  <a href="/admin/">Admin (protected)</a>
+  <br /><br />
+  <button id="check-middleware">Check Middleware</button>
+  <pre id="result"></pre>
+
+  <script>
+    document.getElementById("check-middleware")!.addEventListener("click", async () => {
+      const resultEl = document.getElementById("result")!;
+      resultEl.textContent = "Checking...";
+
+      try {
+        const res = await fetch("/api/check-middleware");
+        const customHeader = res.headers.get("X-Custom-Header");
+        const requestTime = res.headers.get("X-Request-Time");
+
+        const lines = [];
+        lines.push(`Status: ${res.status}`);
+        lines.push(`X-Custom-Header: ${customHeader ?? "NOT FOUND"}`);
+        lines.push(`X-Request-Time: ${requestTime ?? "NOT FOUND"}`);
+        lines.push("");
+
+        if (customHeader === "middleware-active" && requestTime) {
+          lines.push("✅ Middleware is working!");
+        } else {
+          lines.push("❌ Middleware headers missing — middleware may not be active.");
+        }
+
+        resultEl.textContent = lines.join("\n");
+      } catch (err) {
+        resultEl.textContent = `❌ Error: ${err}`;
+      }
+    });
+  </script>
 </Layout>

@@ -1,9 +1,11 @@
 {
-  "name": "test-astro-hybrid",
+  "name": "test-astro-hybrid-middleware",
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "astro build"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
   },
   "dependencies": {
     "@astrojs/node": "^9.0.0",

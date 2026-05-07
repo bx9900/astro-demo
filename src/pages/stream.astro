@@ -1,0 +1,70 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// Helper to simulate slow async data sources
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+---
+<Layout title="Streaming HTML">
+  <h1>HTML Streaming</h1>
+  <p>This page streams HTML as each section becomes ready. Watch the content appear progressively.</p>
+
+  <section class="stream-section">
+    <h2>⚡ Instant Content</h2>
+    <p>This section was available immediately — no waiting.</p>
+  </section>
+
+  {async () => {
+    await sleep(1000);
+    return (
+      <section class="stream-section">
+        <h2>📦 User Data</h2>
+        <p>Loaded after ~1 second. Simulates fetching user info from a database.</p>
+        <pre>{JSON.stringify({ id: 1, name: "Alice", role: "admin" }, null, 2)}</pre>
+      </section>
+    );
+  }}
+
+  {async () => {
+    await sleep(2000);
+    return (
+      <section class="stream-section">
+        <h2>📊 Analytics</h2>
+        <p>Loaded after ~2 more seconds. Simulates a slow analytics query.</p>
+        <pre>{JSON.stringify({ views: 12483, sessions: 3201, bounceRate: "32%" }, null, 2)}</pre>
+      </section>
+    );
+  }}
+
+  {async () => {
+    await sleep(1500);
+    return (
+      <section class="stream-section">
+        <h2>🌐 External API</h2>
+        <p>Loaded after ~1.5 more seconds. Simulates calling a third-party service.</p>
+        <pre>{JSON.stringify({ status: "healthy", latency: "42ms", region: "us-east-1" }, null, 2)}</pre>
+      </section>
+    );
+  }}
+</Layout>
+
+<style>
+  .stream-section {
+    background: var(--color-surface);
+    border: 1px solid #334155;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    animation: fadeIn 0.4s ease-in;
+  }
+
+  .stream-section h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #f8fafc;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
