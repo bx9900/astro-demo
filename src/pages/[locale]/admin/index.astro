@@ -1,0 +1,20 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { translations } from "../../../translations";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+export async function getStaticPaths() {
+  return [
+    { params: { locale: 'en' } },
+    { params: { locale: 'es' } }
+  ];
+}
+
+const { locale } = Astro.params;
+const t = translations[locale as keyof typeof translations];
+---
+<Layout title={t.nav.admin} locale={locale}>
+  <h1>Admin Panel</h1>
+  <p>You are authorized to view this page.</p>
+  <a href={getRelativeLocaleUrl(locale!, "/")}>{t.nav.home}</a>
+</Layout>

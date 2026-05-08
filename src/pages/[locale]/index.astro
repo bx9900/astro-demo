@@ -1,0 +1,56 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { translations } from "../../translations";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+export async function getStaticPaths() {
+  return [
+    { params: { locale: 'en' } },
+    { params: { locale: 'es' } }
+  ];
+}
+
+const { locale } = Astro.params;
+const t = translations[locale as keyof typeof translations];
+---
+<Layout title={t.home.title} locale={locale}>
+  <h1>{t.home.title}</h1>
+  <p>{t.home.description}</p>
+  <a href={getRelativeLocaleUrl(locale!, "/about/")}>{t.nav.about}</a>
+  <br />
+  <a href={getRelativeLocaleUrl(locale!, "/ssr/")}>SSR Page</a>
+  <br />
+  <a href={getRelativeLocaleUrl(locale!, "/admin/")}>{t.nav.admin}</a>
+  <br /><br />
+  <button id="check-middleware">Check Middleware</button>
+  <pre id="result"></pre>
+
+  <script>
+    document.getElementById("check-middleware")!.addEventListener("click", async () => {
+      const resultEl = document.getElementById("result")!;
+      resultEl.textContent = "Checking...";
+
+      try {
+        const res = await fetch("/api/check-middleware");
+        const customHeader = res.headers.get("X-Custom-Header");
+        const requestTime = res.headers.get("X-Request-Time");
+
+        const lines = [];
+        lines.push(`Status: ${res.status}`);
+        lines.push(`X-Custom-Header: ${customHeader ?? "NOT FOUND"}`);
+        lines.push(`X-Request-Time: ${requestTime ?? "NOT FOUND"}`);
+        lines.push("");
+
+        if (customHeader === "middleware-active" && requestTime) {
+          lines.push("✅ Middleware is working!");
+        } else {
+          lines.push("❌ Middleware headers missing — middleware may not be active.");
+        }
+
+        resultEl.textContent = lines.join("\n");
+      } catch (err) {
+        resultEl.textContent = `❌ Error: ${err}`;
+      }
+    });
+  </script>
+</Layout>

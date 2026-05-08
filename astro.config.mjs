@@ -6,4 +6,15 @@ export default defineConfig({
   adapter: node({
     mode: "standalone",
   }),
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en", "es"],
+    routing: {
+      prefixDefaultLocale: true,
+      redirectToDefaultLocale: false,
+    },
+    fallback: {
+      es: "en",
+    },
+  },
 });

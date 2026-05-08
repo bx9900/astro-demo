@@ -1,12 +1,20 @@
 ---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { translations } from "../translations";
+
 interface Props {
   title: string;
+  locale?: string;
 }
 
-const { title } = Astro.props;
+const { title, locale } = Astro.props;
+const currentLocale = locale || Astro.currentLocale || "en";
+const t = translations[currentLocale as keyof typeof translations];
+
+const alternateLocale = currentLocale === "en" ? "es" : "en";
 ---
 <!doctype html>
-<html lang="en">
+<html lang={currentLocale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,11 +23,13 @@ const { title } = Astro.props;
   </head>
   <body>
     <nav>
-      <a href="/">Home</a>
-      <a href="/about/">About</a>
-      <a href="/ssr/">SSR</a>
-      <a href="/stream/">Stream</a>
-      <a href="/admin/">Admin</a>
+      <a href={getRelativeLocaleUrl(currentLocale, "/")}>{t.nav.home}</a>
+      <a href={getRelativeLocaleUrl(currentLocale, "/about/")}>{t.nav.about}</a>
+      <a href={getRelativeLocaleUrl(currentLocale, "/ssr/")}>SSR</a>
+      <a href={getRelativeLocaleUrl(currentLocale, "/stream/")}>Stream</a>
+      <a href={getRelativeLocaleUrl(currentLocale, "/admin/")}>{t.nav.admin}</a>
+      <span> | </span>
+      <a href={getRelativeLocaleUrl(alternateLocale, "/")}>{alternateLocale.toUpperCase()}</a>
     </nav>
     <main>
       <slot />
