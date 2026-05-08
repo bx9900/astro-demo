@@ -16,21 +16,21 @@ const t = translations[locale as keyof typeof translations];
 // Helper to simulate slow async data sources
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 ---
-<Layout title="Streaming HTML" locale={locale}>
-  <h1>HTML Streaming</h1>
-  <p>This page streams HTML as each section becomes ready. Watch the content appear progressively.</p>
+<Layout title={t.stream.title} locale={locale}>
+  <h1>{t.stream.title}</h1>
+  <p>{t.stream.description}</p>
 
   <section class="stream-section">
-    <h2>⚡ Instant Content</h2>
-    <p>This section was available immediately — no waiting.</p>
+    <h2>⚡ {t.stream.instant}</h2>
+    <p>{t.stream.instantDesc}</p>
   </section>
 
   {async () => {
     await sleep(1000);
     return (
       <section class="stream-section">
-        <h2>📦 User Data</h2>
-        <p>Loaded after ~1 second. Simulates fetching user info from a database.</p>
+        <h2>📦 {t.stream.userData}</h2>
+        <p>{t.stream.userDataDesc}</p>
         <pre>{JSON.stringify({ id: 1, name: "Alice", role: "admin" }, null, 2)}</pre>
       </section>
     );
@@ -40,8 +40,8 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
     await sleep(2000);
     return (
       <section class="stream-section">
-        <h2>📊 Analytics</h2>
-        <p>Loaded after ~2 more seconds. Simulates a slow analytics query.</p>
+        <h2>📊 {t.stream.analytics}</h2>
+        <p>{t.stream.analyticsDesc}</p>
         <pre>{JSON.stringify({ views: 12483, sessions: 3201, bounceRate: "32%" }, null, 2)}</pre>
       </section>
     );
@@ -51,8 +51,8 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
     await sleep(1500);
     return (
       <section class="stream-section">
-        <h2>🌐 External API</h2>
-        <p>Loaded after ~1.5 more seconds. Simulates calling a third-party service.</p>
+        <h2>🌐 {t.stream.externalApi}</h2>
+        <p>{t.stream.externalApiDesc}</p>
         <pre>{JSON.stringify({ status: "healthy", latency: "42ms", region: "us-east-1" }, null, 2)}</pre>
       </section>
     );

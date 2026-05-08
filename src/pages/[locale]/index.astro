@@ -18,11 +18,11 @@ const t = translations[locale as keyof typeof translations];
   <p>{t.home.description}</p>
   <a href={getRelativeLocaleUrl(locale!, "/about/")}>{t.nav.about}</a>
   <br />
-  <a href={getRelativeLocaleUrl(locale!, "/ssr/")}>SSR Page</a>
+  <a href={getRelativeLocaleUrl(locale!, "/ssr/")}>{t.home.ssrPage}</a>
   <br />
   <a href={getRelativeLocaleUrl(locale!, "/admin/")}>{t.nav.admin}</a>
   <br /><br />
-  <button id="check-middleware">Check Middleware</button>
+  <button id="check-middleware">{t.home.checkMiddleware}</button>
   <pre id="result"></pre>
 
   <script>

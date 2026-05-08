@@ -13,8 +13,8 @@ export async function getStaticPaths() {
 const { locale } = Astro.params;
 const t = translations[locale as keyof typeof translations];
 ---
-<Layout title={t.nav.admin} locale={locale}>
-  <h1>Admin Panel</h1>
-  <p>You are authorized to view this page.</p>
+<Layout title={t.admin.title} locale={locale}>
+  <h1>{t.admin.title}</h1>
+  <p>{t.admin.authorized}</p>
   <a href={getRelativeLocaleUrl(locale!, "/")}>{t.nav.home}</a>
 </Layout>

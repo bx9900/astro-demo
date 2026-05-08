@@ -1,11 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { translations } from "../translations";
 import { getRelativeLocaleUrl } from "astro:i18n";
+
+const t = translations.en;
 ---
-<Layout title="Select Language">
-  <h1>Welcome</h1>
-  <p>Please select your language:</p>
-  <a href={getRelativeLocaleUrl("en", "/")}>English</a>
+<Layout title={t.lang.select}>
+  <h1>{t.home.title}</h1>
+  <p>{t.lang.selectPrompt}</p>
+  <a href={getRelativeLocaleUrl("en", "/")}>{translations.en.lang.name}</a>
   <br />
-  <a href={getRelativeLocaleUrl("es", "/")}>Español</a>
+  <a href={getRelativeLocaleUrl("es", "/")}>{translations.es.lang.name}</a>
 </Layout>

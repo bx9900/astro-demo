@@ -12,6 +12,7 @@ const currentLocale = locale || Astro.currentLocale || "en";
 const t = translations[currentLocale as keyof typeof translations];
 
 const alternateLocale = currentLocale === "en" ? "es" : "en";
+const alternateLabel = translations[alternateLocale as keyof typeof translations].lang.name;
 ---
 <!doctype html>
 <html lang={currentLocale}>
@@ -25,11 +26,12 @@ const alternateLocale = currentLocale === "en" ? "es" : "en";
     <nav>
       <a href={getRelativeLocaleUrl(currentLocale, "/")}>{t.nav.home}</a>
       <a href={getRelativeLocaleUrl(currentLocale, "/about/")}>{t.nav.about}</a>
-      <a href={getRelativeLocaleUrl(currentLocale, "/ssr/")}>SSR</a>
-      <a href={getRelativeLocaleUrl(currentLocale, "/stream/")}>Stream</a>
+      <a href={getRelativeLocaleUrl(currentLocale, "/ssr/")}>{t.nav.ssr}</a>
+      <a href={getRelativeLocaleUrl(currentLocale, "/stream/")}>{t.nav.stream}</a>
       <a href={getRelativeLocaleUrl(currentLocale, "/admin/")}>{t.nav.admin}</a>
-      <span> | </span>
-      <a href={getRelativeLocaleUrl(alternateLocale, "/")}>{alternateLocale.toUpperCase()}</a>
+      <span class="separator"> | </span>
+      <span class="current-lang">{t.lang.current}</span>
+      <a href={getRelativeLocaleUrl(alternateLocale, "/")}>{alternateLabel}</a>
     </nav>
     <main>
       <slot />
@@ -69,6 +71,7 @@ const alternateLocale = currentLocale === "en" ? "es" : "en";
 
   nav {
     display: flex;
+    align-items: center;
     gap: 1.5rem;
     padding: 1rem 2rem;
     background: var(--color-surface);
@@ -84,6 +87,16 @@ const alternateLocale = currentLocale === "en" ? "es" : "en";
 
   nav a:hover {
     color: var(--color-accent);
+  }
+
+  nav .separator {
+    color: #334155;
+  }
+
+  nav .current-lang {
+    color: var(--color-accent);
+    font-weight: 600;
+    font-size: 0.875rem;
   }
 
   main {

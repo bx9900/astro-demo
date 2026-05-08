@@ -14,8 +14,8 @@ const { locale } = Astro.params;
 const t = translations[locale as keyof typeof translations];
 const renderedAt = new Date().toISOString();
 ---
-<Layout title="SSR Page" locale={locale}>
-  <h1>Server-Side Rendered</h1>
-  <p>This page is rendered on the server at: {renderedAt}</p>
+<Layout title={t.ssr.title} locale={locale}>
+  <h1>{t.ssr.title}</h1>
+  <p>{t.ssr.renderedAt} {renderedAt}</p>
   <a href={getRelativeLocaleUrl(locale!, "/")}>← {t.nav.home}</a>
 </Layout>

@@ -2,9 +2,12 @@
 export const prerender = true;
 
 import Layout from "../layouts/Layout.astro";
+import { translations } from "../translations";
+
+const t = translations.en;
 ---
-<Layout title="Not Found">
-  <h1>404 - Not Found</h1>
-  <p>The page you're looking for doesn't exist.</p>
-  <a href="/">Go home</a>
+<Layout title={t.notFound.title}>
+  <h1>{t.notFound.title}</h1>
+  <p>{t.notFound.description}</p>
+  <a href="/">{t.notFound.goHome}</a>
 </Layout>
